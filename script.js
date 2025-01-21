@@ -1,12 +1,22 @@
 const form = document.querySelector(".test-form");
-const email = document.getElementById("email-input");
-const country = document.getElementById("country-input");
-const zip = document.getElementById("zip-input");
-const pass = document.getElementById("pass-input");
-const passConf = document.getElementById("pass-conf-input");
+const inputElements = document.querySelectorAll(".form-control-div > input");
 
-const emailError = document.querySelector(".email-error");
-const countryError = document.querySelector(".country-error");
-const zipError = document.querySelector(".zip-error");
-const passError = document.querySelector(".pass-error");
-const passConfError = document.querySelector(".pass-conf-error");
+function Input(name) {
+  this.name = name;
+  this.input = document.getElementById(`${name}-input`);
+  this.errorSpan = document.querySelector(`.${name}-error`);
+}
+
+const inputs = [];
+
+inputElements.forEach((element) => {
+  inputs.push(new Input(element.id.substring(0, element.id.indexOf("-"))));
+});
+
+inputs.forEach((input) => {
+  input.input.addEventListener("input", () => {
+    if (input.input.validity.valid) {
+      input.errorSpan.textContent = "OK";
+    }
+  })
+})
